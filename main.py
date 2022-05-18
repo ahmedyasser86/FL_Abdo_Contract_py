@@ -1,5 +1,6 @@
 import os
 from tkinter import *
+from tkinter import messagebox
 import docx2pdf
 from tkcalendar import Calendar, DateEntry
 from docx import Document
@@ -74,8 +75,19 @@ cal2.grid(row=5, column=0, sticky=EW)
 
 
 def btn_Click():
+    if len(txt_sName.get()) == 0 or len(txt_cName.get()) == 0 or len(txt_cNum.get()) == 0 or len(txt_sPrice.get()) == 0:
+        messagebox.showerror("حطأ", "يجب ملئ جميع الحقول")
+        return
+
+    if not os.path.exists("./doc.docx"):
+        messagebox.showerror("حطأ", "ملف الورد الأساسي غير موجود")
+        return
+
     contract_period = (cal2.get_date().year - cal1.get_date().year) * 12 + (
                 cal2.get_date().month - cal1.get_date().month)
+
+    if contract_period == 0:
+        contract_period = 1
 
     dic = {"Day": cal1.get_date().day, "Month": cal1.get_date().month, "Year": cal1.get_date().year,
            "Client_Name": txt_cName.get(), "Client_Num": txt_cNum.get(), "sName": txt_sName.get(),
@@ -96,6 +108,17 @@ def btn_Click():
     name = txt_cName.get() + "_" + str(cal1.get_date().month) + "_" + str(cal1.get_date().day) + "_" + str(cal1.get_date().year)
     doc.save(f'./Contracts/{name}.docx')
     docx2pdf.convert(f'./Contracts/{name}.docx', f'./Contracts/{name}.pdf')
+
+    if os.path.exists(f'./Contracts/{name}.docx') and os.path.exists(f'./Contracts/{name}.pdf'):
+        messagebox.showinfo("نجح", "تم إصدار العقد بنجاح..")
+        txt_cName.delete(0, END)
+        txt_sPrice.delete(0, END)
+        txt_cNum.delete(0, END)
+        txt_sName.delete(0, END)
+        txt_cName.focus()
+
+    else:
+        messagebox.showerror("خطأ", "حدث خطأ ما")
 
 
 btn = Button(frm_Center, text="طباعة العقد", bg="#F2BC79", fg="#1B208C", borderwidth=0,

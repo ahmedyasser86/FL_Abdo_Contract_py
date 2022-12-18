@@ -28,9 +28,11 @@ frm_Center = Frame(root, padx=15, pady=15)
 frm_Center.pack(fill=BOTH, expand=1)
 frm_Center.grid_rowconfigure((1, 3, 4), weight=1)
 frm_Center.grid_columnconfigure(0, weight=1)
-lbl_Cli = Label(frm_Center, text=":بيانات العميل", fg='#1B208C', font=("Arial Bold", 12))
+lbl_Cli = Label(frm_Center, text=":بيانات العميل",
+                fg='#1B208C', font=("Arial Bold", 12))
 lbl_Cli.grid(row=0, column=0, sticky=SE)
-lbl_Con = Label(frm_Center, text=':تفاصيل العقد', fg='#1B208C', font=("Arial Bold", 12))
+lbl_Con = Label(frm_Center, text=':تفاصيل العقد',
+                fg='#1B208C', font=("Arial Bold", 12))
 lbl_Con.grid(row=2, column=0, sticky=SE)
 
 frm_Cli = Frame(frm_Center, highlightthickness=1, highlightbackground='#F2BC79', highlightcolor='#787CBF', pady=10,
@@ -40,7 +42,8 @@ frm_Cli.grid_rowconfigure((0, 1), weight=1)
 frm_Cli.grid_columnconfigure((0, 1), weight=1)
 lbl_cName = Label(frm_Cli, text=":الأسم", fg='#1B208C', font=("Arial", 13))
 lbl_cName.grid(row=0, column=1, sticky=E)
-lbl_cNum = Label(frm_Cli, text=":السجل التجاري", fg='#1B208C', font=("Arial", 13))
+lbl_cNum = Label(frm_Cli, text=":السجل التجاري",
+                 fg='#1B208C', font=("Arial", 13))
 lbl_cNum.grid(row=0, column=0, sticky=E)
 txt_cName = Entry(frm_Cli, fg='#1B208C', font=("Arial Bold", 13), highlightthickness=2, highlightcolor='#464AA6',
                   highlightbackground='#787CBF', bg='#F2F2F0', justify=CENTER)
@@ -54,19 +57,23 @@ frm_Con = Frame(frm_Center, highlightthickness=1, highlightbackground='#F2BC79',
 frm_Con.grid(row=3, column=0, sticky=EW)
 frm_Con.grid_rowconfigure((0, 1, 2, 3, 4, 5), weight=1)
 frm_Con.grid_columnconfigure((0, 1), weight=1)
-lbl_sName = Label(frm_Con, text=":نوع الخدمة", fg='#1B208C', font=("Arial", 13))
+lbl_sName = Label(frm_Con, text=":نوع الخدمة",
+                  fg='#1B208C', font=("Arial", 13))
 lbl_sName.grid(row=0, column=0, sticky=E, columnspan=2)
 txt_sName = Entry(frm_Con, fg='#1B208C', font=("Arial Bold", 13), highlightthickness=2, highlightcolor='#464AA6',
                   highlightbackground='#787CBF', bg='#F2F2F0', justify=CENTER, width=100)
 txt_sName.grid(row=1, column=0, columnspan=2)
-lbl_sPrice = Label(frm_Con, text=":سعر الخدمة", fg='#1B208C', font=("Arial", 13))
+lbl_sPrice = Label(frm_Con, text=":سعر الخدمة",
+                   fg='#1B208C', font=("Arial", 13))
 lbl_sPrice.grid(row=2, column=0, sticky=E, columnspan=2)
 txt_sPrice = Entry(frm_Con, fg='#1B208C', font=("Arial Bold", 13), highlightthickness=2, highlightcolor='#464AA6',
                    highlightbackground='#787CBF', bg='#F2F2F0', justify=CENTER, width=100)
 txt_sPrice.grid(row=3, column=0, columnspan=2)
-lbl_Date1 = Label(frm_Con, text=":تاريخ البدأ", fg='#1B208C', font=("Arial", 13))
+lbl_Date1 = Label(frm_Con, text=":تاريخ البدأ",
+                  fg='#1B208C', font=("Arial", 13))
 lbl_Date1.grid(row=4, column=1, sticky=E)
-lbl_Date2 = Label(frm_Con, text=":تاريخ الأنتهاء", fg='#1B208C', font=("Arial", 13))
+lbl_Date2 = Label(frm_Con, text=":تاريخ الأنتهاء",
+                  fg='#1B208C', font=("Arial", 13))
 lbl_Date2.grid(row=4, column=0, sticky=E)
 cal1 = DateEntry(frm_Con, fg="#1B208C", year=2022)
 cal1.grid(row=5, column=1, sticky=EW)
@@ -84,7 +91,7 @@ def btn_Click():
         return
 
     contract_period = (cal2.get_date().year - cal1.get_date().year) * 12 + (
-                cal2.get_date().month - cal1.get_date().month)
+        cal2.get_date().month - cal1.get_date().month)
 
     if contract_period == 0:
         contract_period = 1
@@ -105,7 +112,8 @@ def btn_Click():
                         text = inline[i].text.replace(a, str(dic[a]))
                         inline[i].text = text
 
-    name = txt_cName.get() + "_" + str(cal1.get_date().month) + "_" + str(cal1.get_date().day) + "_" + str(cal1.get_date().year)
+    name = txt_cName.get() + "_" + str(cal1.get_date().month) + "_" + \
+        str(cal1.get_date().day) + "_" + str(cal1.get_date().year)
     doc.save(f'./Contracts/{name}.docx')
     docx2pdf.convert(f'./Contracts/{name}.docx', f'./Contracts/{name}.pdf')
 
